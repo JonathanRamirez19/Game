@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Juego {
@@ -5,14 +6,31 @@ public class Juego {
     private Personaje enemigo;
 
     public Juego() {
+        // Inicializa al jugador y selecciona un enemigo de manera aleatoria
         jugador = new Jugador("Héroe", 100, 20, 10, 3);
-        enemigo = new Orco("Orco Guerrero", 80, 25, 5); // Puedes cambiar a Esqueleto aquí si quieres
+
+        // Selección aleatoria de enemigos
+        Random random = new Random();
+        int enemigoAleatorio = random.nextInt(3); // 0, 1, o 2
+
+        switch (enemigoAleatorio) {
+            case 0:
+                enemigo = new Orco("Orco Guerrero", 80, 20, 5);
+                break;
+            case 1:
+                enemigo = new Esqueleto("Esqueleto Arquero", 70, 15, 10);
+                break;
+            case 2:
+                enemigo = new MaestroShifu("Maestro Shifu", 60, 30, 15);
+                break;
+        }
     }
 
     public void iniciar() {
+        // Lógica principal del juego, permite alternar entre turnos del jugador y del enemigo
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("¡Comienza el combate!");
+        System.out.println("¡Comienza el combate contra " + enemigo.getNombre() + "!");
         while (jugador.estaVivo() && enemigo.estaVivo()) {
             System.out.println("\nTurno del jugador:");
             System.out.println("1. Atacar");
